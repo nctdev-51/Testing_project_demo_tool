@@ -1,0 +1,14 @@
+﻿a,b,c,expected
+3,3,3,Equilateral
+3,3,5,Isosceles
+3,5,3,Isosceles
+5,3,3,Isosceles
+3,4,5,Scalene
+2,3,4,Scalene
+1,2,3,NotTriangle
+2,2,4,NotTriangle
+5,5,9,Isosceles
+0,4,5,Invalid
+4,0,5,Invalid
+4,5,0,Invalid
+-1,4,5,Invalid
