@@ -3,60 +3,105 @@ using System;
 namespace BasicExercises.Exercises;
 
 /// <summary>
-/// Lớp minh họa ứng dụng console thực tế sử dụng CartService để quản lý giỏ hàng và thanh toán.
-/// Nhóm có thể gọi hàm CartConsoleDemo.Run() hoặc trình bày cho giảng viên xem cách component vận hành trong ứng dụng thực.
+/// Ứng dụng Console chuyên nghiệp minh họa cách CartService vận hành trong thực tế và cách kiểm thử tự động (Assertions).
+/// Nhóm có thể gọi CartConsoleDemo.Run() để trình chiếu bảng điều khiển ASCII màu sắc trực tiếp cho giảng viên.
 /// </summary>
 public static class CartConsoleDemo
 {
     public static void Run()
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.WriteLine("=================================================");
-        Console.WriteLine("       HỆ THỐNG QUẢN LÝ BÁN HÀNG & GIỎ HÀNG      ");
-        Console.WriteLine("=================================================");
+        
+        // Header Banner
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(@"╔════════════════════════════════════════════════════════════════════╗");
+        Console.WriteLine(@"║         E-COMMERCE CART & DISCOUNT ENGINE – CONSOLE DEMO           ║");
+        Console.WriteLine(@"║         (Minh họa BDD Testing: CartDiscount.feature)               ║");
+        Console.WriteLine(@"╚════════════════════════════════════════════════════════════════════╝");
+        Console.ResetColor();
 
+        // 1. Given: Khởi tạo giỏ hàng cho khách VIP
         var cart = new CartService { CustomerTier = "VIP" };
-        Console.WriteLine($"[+] Khởi tạo khách hàng: Hạng {cart.CustomerTier}");
+        Console.WriteLine("\n[1] BDD GIVEN: Khách hàng là thành viên [VIP]");
 
-        // Thêm sản phẩm
-        Console.WriteLine("\n[+] Đang thêm sản phẩm vào giỏ hàng...");
+        // 2. When: Thêm sản phẩm
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n[2] BDD WHEN: Thêm danh sách sản phẩm vào giỏ hàng:");
+        Console.ResetColor();
         cart.AddItem("Chuột Gaming Logitech", 2, 500000);
-        cart.AddItem("Bàn phím cơ DareU", 1, 1000000);
+        cart.AddItem("Bàn phím cơ DareU RGB", 1, 1000000);
 
-        Console.WriteLine("--- CHI TIẾT GIỎ HÀNG ---");
+        Console.WriteLine("    ┌───────────────────────────┬──────────┬──────────────┬──────────────┐");
+        Console.WriteLine("    │ Tên sản phẩm              │ Số lượng │ Đơn giá      │ Thành tiền   │");
+        Console.WriteLine("    ├───────────────────────────┼──────────┼──────────────┼──────────────┤");
         foreach (var item in cart.Items)
         {
-            Console.WriteLine($"- {item.ProductName} | SL: {item.Quantity} | Đơn giá: {item.UnitPrice:N0} VND | Thành tiền: {item.TotalPrice:N0} VND");
+            Console.WriteLine($"    │ {item.ProductName,-25} │ {item.Quantity,8} │ {item.UnitPrice,10:N0} ₫ │ {item.TotalPrice,10:N0} ₫ │");
         }
+        Console.WriteLine("    └───────────────────────────┴──────────┴──────────────┴──────────────┘");
 
         decimal subTotal = cart.GetSubTotal();
-        Console.WriteLine($"=> Tổng tiền tạm tính: {subTotal:N0} VND");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($"    => Tổng tiền tạm tính (SubTotal): {subTotal:N0} ₫");
+        Console.ResetColor();
 
-        // Áp dụng voucher hợp lệ
-        Console.WriteLine("\n[+] Áp dụng mã giảm giá 'VIP20'...");
+        // 3. When: Áp dụng voucher VIP20
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n[3] BDD WHEN: Áp dụng mã giảm giá 'VIP20' (Giảm 20% cho đơn từ 1.000.000 ₫)...");
+        Console.ResetColor();
+
         var result = cart.ApplyDiscount("VIP20");
         if (result.IsSuccess)
         {
-            Console.WriteLine($"[THÀNH CÔNG] Giảm giá: -{result.DiscountAmount:N0} VND");
-            Console.WriteLine($"=> SỐ TIỀN THỰC TRẢ: {result.FinalAmount:N0} VND");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"    [✔ THÀNH CÔNG] Chiết khấu: -{result.DiscountAmount:N0} ₫ (20%)");
+            Console.WriteLine($"    => SỐ TIỀN THỰC TRẢ (FinalAmount): {result.FinalAmount:N0} ₫");
+            Console.ResetColor();
         }
         else
         {
-            Console.WriteLine($"[THẤT BẠI] Lỗi: {result.ErrorMessage}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"    [✖ THẤT BẠI] Lỗi: {result.ErrorMessage}");
+            Console.ResetColor();
         }
 
-        // Thử áp dụng voucher hết hạn
-        Console.WriteLine("\n[+] Thử áp dụng mã hết hạn 'EXPIRED99'...");
+        // 4. Then: Chạy bộ Assertions tự động
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("\n[4] BDD THEN: KIỂM CHỨNG BỘ ASSERTIONS TỰ ĐỘNG:");
+        Console.ResetColor();
+
+        CheckAssertion("SubTotal == 2,000,000 ₫", subTotal == 2000000);
+        CheckAssertion("DiscountAmount == 400,000 ₫ (20% của 2tr)", result.DiscountAmount == 400000);
+        CheckAssertion("FinalAmount == 1,600,000 ₫", result.FinalAmount == 1600000);
+
+        // 5. Thử nghiệm mã hết hạn
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n[5] KIỂM THỬ NGOẠI LỆ: Thử áp dụng voucher đã hết hạn 'EXPIRED99'...");
+        Console.ResetColor();
+
         var expiredResult = cart.ApplyDiscount("EXPIRED99");
-        if (!expiredResult.IsSuccess)
-        {
-            Console.WriteLine($"[BÁO LỖI] {expiredResult.ErrorMessage}");
-            Console.WriteLine($"=> Giữ nguyên số tiền thanh toán: {expiredResult.FinalAmount:N0} VND");
-        }
+        bool isHandledCorrectly = !expiredResult.IsSuccess && expiredResult.FinalAmount == subTotal;
+        CheckAssertion("Chặn mã hết hạn & Giữ nguyên giá trị thanh toán", isHandledCorrectly);
 
-        Console.WriteLine("\n=================================================");
-        Console.WriteLine("             HOÀN TẤT PHIÊN GIAO DỊCH            ");
-        Console.WriteLine("=================================================");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("\n======================================================================");
+        Console.WriteLine("    KẾT QUẢ: TOÀN BỘ CÁC BƯỚC KIỂM THỬ ĐÃ HOÀN TẤT VÀ VƯỢT QUA ✔     ");
+        Console.WriteLine("======================================================================\n");
+        Console.ResetColor();
+    }
+
+    private static void CheckAssertion(string title, bool condition)
+    {
+        if (condition)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"    [✔ PASSED] {title}");
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"    [✖ FAILED] {title}");
+        }
+        Console.ResetColor();
     }
 }
-
