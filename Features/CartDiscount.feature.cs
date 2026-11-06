@@ -17,12 +17,16 @@ namespace BasicExercises.Features
     
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::Xunit.TraitAttribute("Category", "bdd")]
+    [global::Xunit.TraitAttribute("Category", "cart")]
     public partial class ApDụngMaGiảmGiaVaTinhTiềnGiỏHangFeature : object, global::Xunit.IClassFixture<ApDụngMaGiảmGiaVaTinhTiềnGiỏHangFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "bdd",
+                "cart"};
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Áp dụng mã giảm giá và tính tiền giỏ hàng", "  Để kích thích khách hàng mua sắm\r\n  Là một hệ thống thương mại điện tử\r\n  Tôi m" +
                 "uốn tự động tính toán tổng tiền và áp dụng ưu đãi hợp lệ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
@@ -106,19 +110,19 @@ namespace BasicExercises.Features
         
         public virtual async global::System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 6
+#line 8
   #line hidden
-#line 7
+#line 9
     await testRunner.GivenAsync("Khách hàng là thành viên \"VIP\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 10
     await testRunner.AndAsync("Giỏ hàng hiện đang trống", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/CartDiscount.feature.ndjson", 7);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/CartDiscount.feature.ndjson", 10);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -149,15 +153,17 @@ namespace BasicExercises.Features
         [global::Xunit.SkippableFactAttribute(DisplayName="Thêm nhiều mặt hàng vào giỏ và kiểm tra tạm tính")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Áp dụng mã giảm giá và tính tiền giỏ hàng")]
         [global::Xunit.TraitAttribute("Description", "Thêm nhiều mặt hàng vào giỏ và kiểm tra tạm tính")]
+        [global::Xunit.TraitAttribute("Category", "smoke")]
         public async global::System.Threading.Tasks.Task ThemNhiềuMặtHangVaoGiỏVaKiểmTraTạmTinh()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "smoke"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Thêm nhiều mặt hàng vào giỏ và kiểm tra tạm tính", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 10
+#line 13
   this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -167,7 +173,7 @@ namespace BasicExercises.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 8
   await this.FeatureBackgroundAsync();
 #line hidden
                 global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
@@ -182,10 +188,10 @@ namespace BasicExercises.Features
                             "Ban Phim Co",
                             "1",
                             "1000000"});
-#line 11
+#line 14
     await testRunner.WhenAsync("Khách hàng thêm danh sách sản phẩm sau vào giỏ:", ((string)(null)), table1, "When ");
 #line hidden
-#line 15
+#line 18
     await testRunner.ThenAsync("Tổng tiền tạm tính phải là 2000000 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -195,23 +201,31 @@ namespace BasicExercises.Features
         [global::Xunit.SkippableTheoryAttribute(DisplayName="Kiểm tra giảm giá theo hạng thành viên và giá trị đơn hàng")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Áp dụng mã giảm giá và tính tiền giỏ hàng")]
         [global::Xunit.TraitAttribute("Description", "Kiểm tra giảm giá theo hạng thành viên và giá trị đơn hàng")]
-        [global::Xunit.InlineDataAttribute("Standard", "500000", "SALE10", "50000", "450000", "1", new string[0])]
-        [global::Xunit.InlineDataAttribute("VIP", "1000000", "VIP20", "200000", "800000", "2", new string[0])]
-        [global::Xunit.InlineDataAttribute("Silver", "200000", "SALE10", "0", "200000", "3", new string[0])]
-        public async global::System.Threading.Tasks.Task KiểmTraGiảmGiaTheoHạngThanhVienVaGiaTrịDơnHang(string hangThanhVien, string tongTien, string maVoucher, string soTienGiam, string thucTra, string @__pickleIndex, string[] exampleTags)
+        [global::Xunit.TraitAttribute("Category", "regression")]
+        [global::Xunit.InlineDataAttribute("Standard", "500000", "SALE10", "50000", "450000", "true", "1", new string[0])]
+        [global::Xunit.InlineDataAttribute("VIP", "1000000", "VIP20", "200000", "800000", "true", "2", new string[0])]
+        [global::Xunit.InlineDataAttribute("Silver", "200000", "SALE10", "0", "200000", "false", "3", new string[0])]
+        public async global::System.Threading.Tasks.Task KiểmTraGiảmGiaTheoHạngThanhVienVaGiaTrịDơnHang(string hangThanhVien, string tongTien, string maVoucher, string soTienGiam, string thucTra, string thanhCong, string @__pickleIndex, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "regression"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("HangThanhVien", hangThanhVien);
             argumentsOfScenario.Add("TongTien", tongTien);
             argumentsOfScenario.Add("MaVoucher", maVoucher);
             argumentsOfScenario.Add("SoTienGiam", soTienGiam);
             argumentsOfScenario.Add("ThucTra", thucTra);
+            argumentsOfScenario.Add("ThanhCong", thanhCong);
             string pickleIndex = @__pickleIndex;
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Kiểm tra giảm giá theo hạng thành viên và giá trị đơn hàng", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 17
+#line 21
   this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -221,23 +235,85 @@ namespace BasicExercises.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 8
   await this.FeatureBackgroundAsync();
 #line hidden
-#line 18
+#line 22
     await testRunner.GivenAsync(string.Format("Khách hàng có hạng thành viên là \"{0}\"", hangThanhVien), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 19
+#line 23
     await testRunner.AndAsync(string.Format("Đơn hàng có tổng trị giá là {0} VND", tongTien), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 24
     await testRunner.WhenAsync(string.Format("Khách hàng áp dụng mã giảm giá \"{0}\"", maVoucher), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 25
     await testRunner.ThenAsync(string.Format("Số tiền được giảm phải là {0} VND", soTienGiam), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 22
+#line 26
     await testRunner.AndAsync(string.Format("Số tiền thực trả là {0} VND", thucTra), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+    await testRunner.AndAsync(string.Format("Kết quả áp dụng phải là \"{0}\"", thanhCong), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Kiểm tra giá trị biên của mức đơn tối thiểu SALE10")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Áp dụng mã giảm giá và tính tiền giỏ hàng")]
+        [global::Xunit.TraitAttribute("Description", "Kiểm tra giá trị biên của mức đơn tối thiểu SALE10")]
+        [global::Xunit.TraitAttribute("Category", "boundary")]
+        [global::Xunit.InlineDataAttribute("499999", "0", "499999", "false", "4", new string[0])]
+        [global::Xunit.InlineDataAttribute("500000", "50000", "450000", "true", "5", new string[0])]
+        public async global::System.Threading.Tasks.Task KiểmTraGiaTrịBienCủaMứcDơnTốiThiểuSALE10(string tongTien, string soTienGiam, string thucTra, string thanhCong, string @__pickleIndex, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "boundary"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("TongTien", tongTien);
+            argumentsOfScenario.Add("SoTienGiam", soTienGiam);
+            argumentsOfScenario.Add("ThucTra", thucTra);
+            argumentsOfScenario.Add("ThanhCong", thanhCong);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Kiểm tra giá trị biên của mức đơn tối thiểu SALE10", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 36
+  this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 8
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 37
+    await testRunner.GivenAsync("Khách hàng có hạng thành viên là \"Standard\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 38
+    await testRunner.AndAsync(string.Format("Đơn hàng có tổng trị giá là {0} VND", tongTien), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 39
+    await testRunner.WhenAsync("Khách hàng áp dụng mã giảm giá \"SALE10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 40
+    await testRunner.ThenAsync(string.Format("Số tiền được giảm phải là {0} VND", soTienGiam), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 41
+    await testRunner.AndAsync(string.Format("Số tiền thực trả là {0} VND", thucTra), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 42
+    await testRunner.AndAsync(string.Format("Kết quả áp dụng phải là \"{0}\"", thanhCong), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -246,15 +322,17 @@ namespace BasicExercises.Features
         [global::Xunit.SkippableFactAttribute(DisplayName="Xử lý khi mã giảm giá hết hạn hoặc không hợp lệ")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Áp dụng mã giảm giá và tính tiền giỏ hàng")]
         [global::Xunit.TraitAttribute("Description", "Xử lý khi mã giảm giá hết hạn hoặc không hợp lệ")]
+        [global::Xunit.TraitAttribute("Category", "negative")]
         public async global::System.Threading.Tasks.Task XửLyKhiMaGiảmGiaHếtHạnHoặcKhongHợpLệ()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "negative"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "4";
+            string pickleIndex = "6";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Xử lý khi mã giảm giá hết hạn hoặc không hợp lệ", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 30
+#line 50
   this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -264,20 +342,71 @@ namespace BasicExercises.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 8
   await this.FeatureBackgroundAsync();
 #line hidden
-#line 31
+#line 51
     await testRunner.GivenAsync("Đơn hàng có tổng trị giá là 500000 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 52
     await testRunner.WhenAsync("Khách hàng áp dụng mã giảm giá \"EXPIRED99\" đã hết hạn", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 33
+#line 53
     await testRunner.ThenAsync("Hệ thống phải báo lỗi \"Mã giảm giá không hợp lệ hoặc đã hết hạn\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 34
+#line 54
     await testRunner.AndAsync("Số tiền thực trả giữ nguyên là 500000 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Từ chối voucher VIP khi khách hàng không thuộc hạng VIP")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Áp dụng mã giảm giá và tính tiền giỏ hàng")]
+        [global::Xunit.TraitAttribute("Description", "Từ chối voucher VIP khi khách hàng không thuộc hạng VIP")]
+        [global::Xunit.TraitAttribute("Category", "negative")]
+        public async global::System.Threading.Tasks.Task TừChốiVoucherVIPKhiKhachHangKhongThuộcHạngVIP()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "negative"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "7";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Từ chối voucher VIP khi khách hàng không thuộc hạng VIP", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 57
+  this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 8
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 58
+    await testRunner.GivenAsync("Khách hàng có hạng thành viên là \"Standard\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 59
+    await testRunner.AndAsync("Đơn hàng có tổng trị giá là 1000000 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 60
+    await testRunner.WhenAsync("Khách hàng áp dụng mã giảm giá \"VIP20\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 61
+    await testRunner.ThenAsync("Hệ thống phải báo lỗi \"Mã này chỉ áp dụng cho hạng thành viên VIP\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 62
+    await testRunner.AndAsync("Số tiền được giảm phải là 0 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 63
+    await testRunner.AndAsync("Số tiền thực trả giữ nguyên là 1000000 VND", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 64
+    await testRunner.AndAsync("Kết quả áp dụng phải là \"false\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

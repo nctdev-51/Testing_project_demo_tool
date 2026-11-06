@@ -20,6 +20,12 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
+  <!-- The BDD suite must exercise the same domain service used by CartApp. -->
+  <ItemGroup>
+    <ProjectReference Include="..\CartApp.Core\CartApp.Core.csproj" />
+    <Compile Remove="Exercises\CartService.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>

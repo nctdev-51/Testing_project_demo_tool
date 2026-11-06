@@ -1,5 +1,4 @@
-using System;
-using BasicExercises.Exercises;
+using CartApp.Core;
 using Reqnroll;
 using Xunit;
 
@@ -72,6 +71,12 @@ public class CartDiscountSteps
     public void ThenSoTienThucTraLa(decimal expectedFinal)
     {
         Assert.Equal(expectedFinal, _lastResult.FinalAmount);
+    }
+
+    [Then("Kết quả áp dụng phải là {string}")]
+    public void ThenKetQuaApDungPhaiLa(string expectedSuccess)
+    {
+        Assert.Equal(bool.Parse(expectedSuccess), _lastResult.IsSuccess);
     }
 
     [When("Khách hàng áp dụng mã giảm giá {string} đã hết hạn")]
